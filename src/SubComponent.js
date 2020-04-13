@@ -3,42 +3,70 @@ export default class SubComponent {
         return true;
     }
 
-    constructor() {
+    static get sanitize() {
+        return {
+            sub: {}
+        }
+    }
+
+    get state() {
+        return this._state;
+    }
+
+    set state(state) {
+        this._state = state;
+
+        this.button.classList.toggle(this.api.styles.inlineToolButtonActive, state);
+    }
+
+    constructor({api}) {
         this.button = null;
-        this.state = false;
+        this._state = false;
+        this.api = api;
+
+        this.tag = 'SUB';
+        this.class = '_active';
     }
 
     render() {
         this.button = document.createElement('button');
         this.button.type = 'button';
-        this.button.textContent = 'Sup';
+        this.button.textContent = 'Sub';
+        this.button.classList.add(this.api.styles.inlineToolButton);
 
         return this.button;
     }
 
     surround(range) {
         if (this.state) {
+            this.unwrap(range);
             return;
         }
 
-        const selectedText = range.extractContents();
-
-        const sub = document.createElement('sub');
-
-        sub.appendChild(selectedText);
-
-        range.insertNode(sub);
+        this.wrap(range);
     }
 
-    checkState(selection) {
-        const text = selection.anchorNode;
+    wrap(range) {
+        const selectedText = range.extractContents();
+        const sub = document.createElement(this.tag);
 
-        if (!text) {
-            return;
-        }
+        sub.appendChild(selectedText);
+        range.insertNode(sub);
 
-        const anchorElement = text instanceof Element ? text : text.parentElement;
+        this.api.selection.expandToTag(sub);
+    }
 
-        this.state = !!anchorElement.closest('sub');
+    unwrap(range) {
+        const sub = this.api.selection.findParentTag(this.tag);
+        const text = range.extractContents();
+
+        sub.remove();
+
+        range.insertNode(text);
+    }
+
+    checkState() {
+        const sub = this.api.selection.findParentTag(this.tag);
+        this.state = !!sub;
     }
 }

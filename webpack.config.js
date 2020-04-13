@@ -20,10 +20,22 @@ module.exports = {
               </head>
               <body>
                 <div id="app"></div>
-                ${htmlWebpackPlugin.tags.bodyTags}
+                <div id="output"></div>
               </body>
             </html>
           `
         })
-    ]
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.scss$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
+            }
+        ]
+    }
 }
