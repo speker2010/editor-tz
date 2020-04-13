@@ -1,2 +1,9 @@
-const appEl = document.querySelector('#app');
-appEl.innerHTML = 'Editor';
+import EditorJS from '@editorjs/editorjs';
+import SubComponent from './SubComponent';
+
+const editor = new EditorJS({
+    holderId: 'app',
+    tools: {
+        class: SubComponent
+    }
+});
