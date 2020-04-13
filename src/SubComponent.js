@@ -5,7 +5,7 @@ export default class SubComponent {
 
     static get sanitize() {
         return {
-            sub: {},
+            sub: true,
         };
     }
 

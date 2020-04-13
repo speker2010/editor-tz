@@ -35,7 +35,16 @@ module.exports = {
                     'css-loader',
                     'sass-loader'
                 ]
+            },
+            { 
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: "babel-loader" 
             }
         ]
+    },
+    mode: 'development',
+    optimization: {
+        usedExports: true,
     }
 }
