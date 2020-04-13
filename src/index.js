@@ -11,17 +11,17 @@ const editor = new EditorJS({
         sub: SubComponent,
         header: {
             class: Header,
-            inlineToolbar: true
+            inlineToolbar: true,
         },
         list: {
             class: List,
-            inlineToolbar: true
+            inlineToolbar: true,
         },
         checklist: {
             class: Checklist,
-            inlineToolbar: true
-        }
-    }
+            inlineToolbar: true,
+        },
+    },
 });
 
 const outputEl = document.querySelector('#output');
@@ -38,5 +38,9 @@ outputEl.appendChild(pre);
 btn.addEventListener('click', () => {
     editor.save().then((outputDate) => {
         pre.innerText = JSON.stringify(outputDate, null, '\t');
+        console.log('Data ', outputDate);
     })
+        .catch((error) => {
+            console.log('Saving failed ', error);
+        });
 });

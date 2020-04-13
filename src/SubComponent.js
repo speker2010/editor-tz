@@ -5,8 +5,8 @@ export default class SubComponent {
 
     static get sanitize() {
         return {
-            sub: {}
-        }
+            sub: {},
+        };
     }
 
     get state() {
@@ -19,7 +19,7 @@ export default class SubComponent {
         this.button.classList.toggle(this.api.styles.inlineToolButtonActive, state);
     }
 
-    constructor({api}) {
+    constructor({ api }) {
         this.button = null;
         this._state = false;
         this.api = api;
